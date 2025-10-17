@@ -1,0 +1,261 @@
+
+    .article-header {
+      background: #23232e;
+      padding: 60px 0 40px;
+      text-align: center;
+    }
+    
+    .article-header .site-inner {
+      max-width: 800px;
+    }
+    
+    .article-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    
+    .back-link {
+      color: #7b77c9;
+      font-family: segoeui, Arial, sans-serif;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .back-link svg {
+      margin-right: 8px;
+      height: 16px;
+      width: 16px;
+    }
+    
+    .back-link:hover {
+      color: #9d9ad6;
+    }
+    
+    .reading-time {
+      color: #818baa;
+      font-family: segoeui, Arial, sans-serif;
+      font-size: 14px;
+    }
+    
+    .article-title {
+      color: white;
+      font-family: segoeuib, Arial, sans-serif;
+      font-size: 42px;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+    
+    .article-excerpt {
+      color: white;
+      font-family: segoeui, Arial, sans-serif;
+      font-size: 20px;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+    
+    .article-content {
+      max-width: 800px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+    
+    .article-body {
+      font-family: segoeui, Arial, sans-serif;
+      font-size: 18px;
+      line-height: 1.8;
+      color: #464b4f;
+    }
+    
+    .article-body h2 {
+      font-family: segoeuib, Arial, sans-serif;
+      font-size: 28px;
+      color: #23232e;
+      margin: 40px 0 20px;
+    }
+    
+    .article-body h3 {
+      font-family: segoeuib, Arial, sans-serif;
+      font-size: 22px;
+      color: #23232e;
+      margin: 30px 0 15px;
+    }
+    
+    .article-body p {
+      margin-bottom: 20px;
+    }
+    
+    .article-body blockquote {
+      border-left: 4px solid #7b77c9;
+      padding-left: 20px;
+      margin: 30px 0;
+      font-style: italic;
+      color: #666;
+    }
+    
+    .article-body ul, .article-body ol {
+      margin-bottom: 20px;
+      padding-left: 30px;
+    }
+    
+    .article-body li {
+      margin-bottom: 10px;
+    }
+    
+    .article-image {
+      margin: 30px 0;
+      text-align: center;
+    }
+    
+    .article-image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+    
+    .article-image figcaption {
+      font-size: 14px;
+      color: #888a8b;
+      margin-top: 10px;
+      font-style: italic;
+    }
+    
+    .article-navigation {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 60px;
+      padding-top: 30px;
+      border-top: 1px solid #e0e0e0;
+    }
+    
+    .nav-button {
+      display: flex;
+      align-items: center;
+      color: #7b77c9;
+      font-family: segoeui, Arial, sans-serif;
+      font-size: 16px;
+      max-width: 45%;
+    }
+    
+    .nav-button.prev {
+      text-align: left;
+    }
+    
+    .nav-button.next {
+      text-align: right;
+      margin-left: auto;
+    }
+    
+    .nav-button svg {
+      height: 16px;
+      width: 16px;
+    }
+    
+    .nav-button.prev svg {
+      margin-right: 8px;
+    }
+    
+    .nav-button.next svg {
+      margin-left: 8px;
+    }
+    
+    .nav-button:hover {
+      color: #9d9ad6;
+    }
+    
+    .article-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 30px 0;
+    }
+    
+
+    /* Estilos para a seção do autor */
+    .article-author {
+      display: flex;
+      align-items: center;
+      margin: 40px 0;
+      padding: 25px;
+      background-color: #f8f9fa;
+      border-radius: 12px;
+      border-left: 4px solid #7b77c9;
+    }
+    
+    .author-avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      margin-right: 20px;
+      object-fit: cover;
+      border: 3px solid #e0e0e0;
+    }
+    
+    .author-info h4 {
+      margin: 0 0 8px 0;
+      color: #23232e;
+      font-family: segoeuib, Arial, sans-serif;
+      font-size: 18px;
+    }
+    
+    .author-info p {
+      margin: 0;
+      color: #666;
+      font-family: segoeui, Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+    
+    .author-role {
+      color: #7b77c9 !important;
+      font-weight: bold;
+      margin-bottom: 5px !important;
+    }
+    
+    @media only screen and (max-width: 767px) {
+      .article-author {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+      }
+      
+      .author-avatar {
+        margin-right: 0;
+        margin-bottom: 15px;
+      }
+    }
+ 
+    
+    @media only screen and (max-width: 767px) {
+      .article-title {
+        font-size: 32px;
+      }
+      
+      .article-excerpt {
+        font-size: 18px;
+      }
+      
+      .article-body {
+        font-size: 16px;
+      }
+      
+      .article-body h2 {
+        font-size: 24px;
+      }
+      
+      .article-body h3 {
+        font-size: 20px;
+      }
+      
+      .article-navigation {
+        flex-direction: column;
+        gap: 20px;
+      }
+      
+      .nav-button {
+        max-width: 100%;
+      }
+    }
+  
