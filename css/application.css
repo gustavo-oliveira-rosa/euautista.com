@@ -7,6 +7,10 @@ img.inject-me {
   display: none;
 }
 
+.site-inner .h-01 {
+  text-align: center;
+}
+
 a {
   text-decoration: none;
   -webkit-font-smoothing: antialiased;
@@ -19,7 +23,7 @@ a {
 
 .site-inner {
   position: relative;
-  width: 58.75em;
+  width: 90%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -32,9 +36,6 @@ a {
   margin-left: -29.375em;
 }
 
-/* ★★★★★★★★★★★★★★★★★★★★★★★★★★★★ */
-/* ★ Typography                 */
-/* ★★★★★★★★★★★★★★★★★★★★★★★★★★★★ */
 @font-face {
   font-family: segoeui;
   font-weight: normal;
@@ -126,12 +127,34 @@ a {
 .button.rounded {
   border-radius: 3px;
 }
+
+/* Animação para logo e título */
+.brand-logo img,
+.heading.h-01 {
+  display: inline-block;
+  animation: pulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);   /* tamanho normal */
+  }
+  50% {
+    transform: scale(1.05); /* aumenta 5% */
+  }
+  100% {
+    transform: scale(1);   /* volta ao tamanho normal */
+  }
+}
+
+
 .button:hover {
   opacity: 0.7;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=” $value * 100 “)";
   filter: alpha(opacity=70);
   zoom: 1;
 }
+
 
 .section {
   padding: 114px 0;
@@ -140,12 +163,33 @@ a {
   text-align: center;
 }
 
+.highlight {
+  color: #ffce00;       
+  font-weight: 700;    
+  background-color: rgba(255, 255, 255, 0.1); 
+  padding: 2px 4px;     
+  border-radius: 4px;   
+  transition: all 0.3s ease;
+}
+
+.highlight:hover {
+  transform: scale(1.1);  
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+
 #page-hero {
   text-align: center;
   background: #23232e;
+  min-height: 100vh;
+  display: flex;     
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center; 
 }
+
 #page-hero .brand-logo {
-  padding: 80px 0 168px 0;
+  padding-top: 200px;
 }
 #page-hero .brand-logo #brand-logo {
   height: 135px;
@@ -354,78 +398,115 @@ a {
   margin: 0;
 }
 
+
+/* Estilos para a seção de artigos - FORMATO LISTA */
 #page-work {
   position: relative;
-  text-align: center;
+  text-align: left;
   background: #23232e;
 }
+
 #page-work .h-01 {
   color: white;
   margin-bottom: 50px;
 }
+
 #page-work .h-02 {
   color: white;
-  margin: 30px 0 15px 0;
+  margin: 0 0 10px 0;
+  font-size: 19px;
 }
-#page-work .copy-03, #page-work .filter-link, #page-work #page-signup .form-result, #page-signup #page-work .form-result {
+
+#page-work .copy-03 {
   color: #818baa;
+  line-height: 1.5;
+  margin: 0;
 }
-#page-work .shuffle__sizer {
-  position: absolute;
-  opacity: 0;
-  visibility: hidden;
-  width: 20px;
-  margin-left: 20px;
+
+/* Lista de artigos */
+.article-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+    width: 100%;
 }
-#page-work .mobile-filter-select {
-  display: none;
-}
-#page-work #work-filter {
-  margin-bottom: 60px;
-}
-#page-work .filter-link {
-  color: white;
-  margin: 0 29px;
-}
-#page-work .filter-link:hover {
-  color: #818baa;
-}
-#page-work .filter-link.active {
-  border-bottom: 2px solid #7b77c9;
-  padding-bottom: 3px;
-}
-#page-work .work-item {
-  margin-bottom: 50px;
-  margin-right: 15px;
+
+.work-item {
+  width: 100%;
+   box-sizing: border-box; 
+  background: rgba(255, 255, 255, 0.05);
+  border-left: 4px solid transparent;
+  margin-bottom: 15px;
+  padding: 0;
+  transition: all 0.3s ease;
   cursor: pointer;
 }
-#page-work .work-item:nth-child(3n) {
-  margin-right: 0;
+
+.work-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-left-color: #7b77c9;
+  transform: translateX(5px);
 }
-#page-work .work-item figure {
-  height: 300px;
-  width: 300px;
-  overflow: hidden;
+
+.article-content {
+   width: 100%;
+  box-sizing: border-box;
+  padding: 20px 25px;
 }
-#page-work .work-item figure img {
-  -webkit-transition: all 1s ease;
-  -moz-transition: all 1s ease;
-  transition: all 1s ease;
-  display: block;
-  height: 100%;
-  width: 100%;
+
+/* Tags de categoria */
+.category-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  background-color: #7b77c9;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 3px;
+  margin-bottom: 12px;
 }
-#page-work .work-item:hover img {
-  -webkit-transform: scale(1.2) translateX(5px) rotate(5deg);
-  -moz-transform: scale(1.2) translateX(5px) rotate(5deg);
-  -ms-transform: scale(1.2) translateX(5px) rotate(5deg);
-  -o-transform: scale(1.2) translateX(5px) rotate(5deg);
-  transform: scale(1.2) translateX(5px) rotate(5deg);
+
+/* Cores específicas por categoria */
+.work-item[data-groups*="autismo"] .category-tag { background-color: #e74c3c; }
+.work-item[data-groups*="sintomas"] .category-tag { background-color: #9b59b6; }
+.work-item[data-groups*="educacao"] .category-tag { background-color: #3498db; }
+.work-item[data-groups*="familia"] .category-tag { background-color: #2ecc71; }
+.work-item[data-groups*="direitos"] .category-tag { background-color: #f39c12; }
+.work-item[data-groups*="historias"] .category-tag { background-color: #1abc9c; }
+.work-item[data-groups*="saude"] .category-tag { background-color: #d35400; }
+.work-item[data-groups*="tecnologia"] .category-tag { background-color: #34495e; }
+
+/* Filtros */
+#work-filter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 40px;
+  padding: 0 20px;
 }
-#page-work .button {
-  margin-top: 40px;
+
+.filter-link {
+  color: white;
+  margin: 0 10px;
+  padding: 8px 0;
+  position: relative;
 }
-#page-work #work-detail {
+
+.filter-link:hover {
+  color: #818baa;
+}
+
+.filter-link.active {
+  border-bottom: 2px solid #7b77c9;
+}
+
+.mobile-filter-select {
+  display: none;
+}
+
+/* Detalhes do artigo */
+#work-detail {
   display: none;
   background: #23232e;
   text-align: left;
@@ -437,7 +518,8 @@ a {
   height: 100%;
   width: 100%;
 }
-#page-work #work-detail .close-icon {
+
+#work-detail .close-icon {
   cursor: pointer;
   display: block;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
@@ -452,8 +534,65 @@ a {
   right: 0;
   color: white;
 }
-#page-work #work-detail .inner {
+
+#work-detail .inner {
   padding: 70px 0;
+}
+
+/* Responsividade */
+@media only screen and (max-width: 767px) {
+  #page-work .mobile-filter-select {
+    position: relative;
+    display: block;
+    margin: 30px 0;
+    font-family: segoeuib, Arial, sans-serif;
+    font-size: 14px;
+    color: white;
+    text-align: center;
+  }
+  
+  #page-work .mobile-filter-select:after {
+    content: "+";
+    position: relative;
+    left: 5px;
+  }
+  
+  #page-work .mobile-filter-select.opened:after {
+    content: "-";
+  }
+  
+  #page-work #work-filter {
+    display: none;
+    height: auto;
+  }
+  
+  #page-work #work-filter a {
+    position: relative;
+    text-align: center;
+    display: block;
+    margin-bottom: 15px;
+    border: none;
+    padding: 0;
+  }
+  
+  #page-work #work-filter a.active:after {
+    content: "";
+    display: block;
+    height: 3px;
+    width: 60px;
+    text-align: center;
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    margin-left: -31px;
+    height: 3px;
+    width: 60px;
+    background: #7b77c9;
+  }
+  
+  .article-content {
+    padding: 15px 20px;
+  }
 }
 
 #page-photography {
