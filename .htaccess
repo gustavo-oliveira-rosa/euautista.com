@@ -24,6 +24,8 @@ Options -Indexes
 RewriteCond %{HTTP_USER_AGENT} ^(wget|curl|libwww-perl|python|nikto|sqlmap) [NC,OR]
 RewriteCond %{HTTP_USER_AGENT} ^.*(scan|bot|crawler|spider).* [NC]
 RewriteRule ^.* - [F,L]
+AddType application/manifest+json .webmanifest
+AddType application/javascript .js
 
 # 5. BLOQUEAR ACESSO A PASTAS ESPECÍFICAS
 <IfModule mod_rewrite.c>
