@@ -1,0 +1,14 @@
+{
+  "name": "Eu Autista",
+  "short_name": "Eu Autista",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#23232e",
+  "theme_color": "#23232e",
+  "description": "Eu autista é um aplicativo voltado para pessoas autistas, oferecendo recursos e ferramentas para facilitar o dia a dia.",
+  "icons": [
+    { "src": "/images/icon192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/images/icon512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
