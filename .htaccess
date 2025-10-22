@@ -24,8 +24,6 @@ Options -Indexes
 RewriteCond %{HTTP_USER_AGENT} ^(wget|curl|libwww-perl|python|nikto|sqlmap) [NC,OR]
 RewriteCond %{HTTP_USER_AGENT} ^.*(scan|bot|crawler|spider).* [NC]
 RewriteRule ^.* - [F,L]
-AddType application/manifest+json .webmanifest
-AddType application/javascript .js
 
 # 5. BLOQUEAR ACESSO A PASTAS ESPECÍFICAS
 <IfModule mod_rewrite.c>
@@ -56,3 +54,11 @@ AddType application/javascript .js
 <IfModule mod_deflate.c>
     AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript
 </IfModule>
+
+# Permitir o service worker e o manifest
+<FilesMatch "^(sw\.js|manifest\.webmanifest)$">
+  Require all granted
+</FilesMatch>
+
+AddType application/manifest+json .webmanifest
+AddType application/javascript .js

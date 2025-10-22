@@ -1,7 +1,7 @@
 {
   "name": "Eu Autista",
   "short_name": "Eu Autista",
-  "start_url": "/?source=pwa",
+  "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "background_color": "#0f172a",
