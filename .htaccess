@@ -93,6 +93,17 @@ AddType application/javascript .mjs
 </FilesMatch>
 
 # ---------------------------------------
+# 7) Service Worker (opcional)
+#    Se o sw.js não estiver na raiz e você quiser escopo "/"
+# ---------------------------------------
+<Files "sw.js">
+  <IfModule mod_headers.c>
+    Header set Service-Worker-Allowed "/"
+    Header set Cache-Control "no-cache"
+  </IfModule>
+</Files>
+
+# ---------------------------------------
 # 8) Bloquear bots ruins (ajuste com cuidado!)
 #    Mantenha uma allowlist para não bloquear Google/Bing/etc.
 # ---------------------------------------
