@@ -1,130 +1,56 @@
-# ---------------------------------------
-# 0) Forçar HTTPS
-# ---------------------------------------
+# Ativar rewrite engine
 RewriteEngine On
-RewriteCond %{HTTPS} !=on
-RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
-# ---------------------------------------
-# 1) Bloquear arquivos sensíveis
-# ---------------------------------------
+# 1. BLOQUEAR ACESSO A ARQUIVOS SENSÍVEIS
 <FilesMatch "\.(htaccess|htpasswd|ini|log|sh|inc|bak|sql)$">
-  Require all denied
+    Order Allow,Deny
+    Deny from all
 </FilesMatch>
 
-# Exceções úteis para .txt
-<Files "robots.txt">
-  Require all granted
+# 2. IMPEDIR LISTAGEM DE DIRETÓRIOS
+Options -Indexes
+
+# 3. BLOQUEAR ACESSO DIRETO A CERTOS ARQUIVOS
+<Files "*.txt">
+    Deny from all
 </Files>
-<Files "security.txt">
-  Require all granted
+
+<Files "*.md">
+    Deny from all
 </Files>
 
-# ---------------------------------------
-# 2) Impedir listagem de diretórios
-# ---------------------------------------
-Options -Indexes -Multiviews
+# 4. PROTEÇÃO CONTRA SCANNERS E BOTS MALICIOSOS
+# Bloquear user agents suspeitos
+RewriteCond %{HTTP_USER_AGENT} ^(wget|curl|libwww-perl|python|nikto|sqlmap) [NC,OR]
+RewriteCond %{HTTP_USER_AGENT} ^.*(scan|bot|crawler|spider).* [NC]
+RewriteRule ^.* - [F,L]
 
-# ---------------------------------------
-# 3) MIME types importantes (PWA)
-# ---------------------------------------
-AddType application/manifest+json .webmanifest
-AddType image/avif .avif
-AddType image/webp .webp
-AddType application/javascript .mjs
+# 5. BLOQUEAR ACESSO A PASTAS ESPECÍFICAS
+<IfModule mod_rewrite.c>
+    RewriteRule ^(\.git|node_modules|vendor)/ - [F,L]
+</IfModule>
 
-# ---------------------------------------
-# 4) Segurança (headers)
-# ---------------------------------------
+# 6. PROTEÇÃO CONTRA HOTLINKING (se tiver imagens)
+# RewriteCond %{HTTP_REFERER} !^$
+# RewriteCond %{HTTP_REFERER} !^https?://(www\.)?euseudominio\.com [NC]
+# RewriteRule \.(jpg|jpeg|png|gif)$ - [F,L]
+
+# 7. LIMITAR MÉTODOS HTTP PERMITIDOS
+<LimitExcept GET POST>
+    Deny from all
+</LimitExcept>
+
+# 8. HEADERS DE SEGURANÇA BÁSICOS
 <IfModule mod_headers.c>
-  Header always set X-Content-Type-Options "nosniff"
-  Header always set X-Frame-Options "SAMEORIGIN"
-  Header always set Referrer-Policy "strict-origin-when-cross-origin"
-  # HSTS (apenas se já estiver 100% em HTTPS):
-  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-  # CSP básica (ajuste domínios/conteúdo inline conforme seu site)
-  Header always set Content-Security-Policy "default-src 'self'; img-src 'self' data: https:; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; manifest-src 'self'; connect-src 'self'"
-  # Permissions (desliga APIs que você não usa)
-  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), usb=(), payment=()"
+    # Proteção XSS
+    Header set X-XSS-Protection "1; mode=block"
+    # Prevenir clickjacking
+    Header set X-Frame-Options "SAMEORIGIN"
+    # Política de referrer
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
 
-# ---------------------------------------
-# 5) Compressão
-# ---------------------------------------
+# 9. COMPRESSÃO PARA MELHOR PERFORMANCE (opcional)
 <IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json application/manifest+json
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript
 </IfModule>
-<IfModule mod_brotli.c>
-  BrotliCompressionQuality 5
-  AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/xml text/css text/javascript application/javascript application/json application/manifest+json
-</IfModule>
-
-# ---------------------------------------
-# 6) Cache-Control
-#    - HTML: no-cache (para ver updates)
-#    - Estáticos: cache longo com revalidação
-# ---------------------------------------
-<IfModule mod_expires.c>
-  ExpiresActive On
-  ExpiresByType text/html "access plus 0 seconds"
-  ExpiresByType application/manifest+json "access plus 1 year"
-  ExpiresByType application/javascript "access plus 1 year"
-  ExpiresByType text/css "access plus 1 year"
-  ExpiresByType image/png "access plus 1 year"
-  ExpiresByType image/svg+xml "access plus 1 year"
-  ExpiresByType image/webp "access plus 1 year"
-  ExpiresByType image/avif "access plus 1 year"
-</IfModule>
-
-# HTML sem cache agressivo
-<FilesMatch "\.(html)$">
-  <IfModule mod_headers.c>
-    Header always set Cache-Control "no-cache, no-store, must-revalidate"
-    Header always set Pragma "no-cache"
-    Header always set Expires "0"
-  </IfModule>
-</FilesMatch>
-
-# Estáticos com cache longo
-<FilesMatch "\.(js|mjs|css|png|jpg|jpeg|gif|svg|webp|avif|ico|woff2?)$">
-  <IfModule mod_headers.c>
-    Header always set Cache-Control "public, max-age=31536000, immutable"
-  </IfModule>
-</FilesMatch>
-
-# ---------------------------------------
-# 7) Service Worker (opcional)
-#    Se o sw.js não estiver na raiz e você quiser escopo "/"
-# ---------------------------------------
-<Files "sw.js">
-  <IfModule mod_headers.c>
-    Header set Service-Worker-Allowed "/"
-    Header set Cache-Control "no-cache"
-  </IfModule>
-</Files>
-
-# ---------------------------------------
-# 8) Bloquear bots ruins (ajuste com cuidado!)
-#    Mantenha uma allowlist para não bloquear Google/Bing/etc.
-# ---------------------------------------
-# Allowlist (Google, Bing, etc.) - simplificado:
-SetEnvIfNoCase User-Agent "Googlebot|Bingbot|DuckDuckBot|YandexBot|Baiduspider" good_bot
-# Block alguns ruins comuns:
-BrowserMatchNoCase "curl|nikto|sqlmap|libwww-perl" bad_bot
-<RequireAll>
-  Require all granted
-  Require not env bad_bot
-</RequireAll>
-
-# ---------------------------------------
-# 9) Bloquear acesso a pastas específicas
-# ---------------------------------------
-RewriteRule ^(\.git|node_modules|vendor)/ - [F,L]
-
-# ---------------------------------------
-# 10) SPA fallback (se você usa rotas no front-end)
-# Descomente se necessário:
-# RewriteCond %{REQUEST_FILENAME} !-f
-# RewriteCond %{REQUEST_FILENAME} !-d
-# RewriteRule . /index.html [L]
-
